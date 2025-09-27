@@ -1,4 +1,4 @@
-# Money Expense App
+# FakeStore App
 
 Aplikasi mobile untuk menampilkan produk dari FakeStore API dengan Flutter, serta menyimpan profil pengguna secara lokal menggunakan SQLite.
 
