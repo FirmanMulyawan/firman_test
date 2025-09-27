@@ -252,11 +252,119 @@ class ProductsScreen extends GetView<ProductsController> {
                 top: 10,
                 bottom: 20,
               ),
-              child: Column(
-                children: [
-                  Text("hello world tablet"),
-                ],
-              ),
+              child: GetBuilder<ProductsController>(builder: (ctrl) {
+                final productsList = ctrl.productsList;
+                final isLoading = ctrl.isLoading;
+
+                if (!isLoading && productsList.isEmpty) {
+                  return Column(
+                    children: [
+                      _searchBar(),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.inventory_2_outlined,
+                              size: 60,
+                              color: AppStyle.homeYoutubeRed,
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              'noData'.tr,
+                              style: AppStyle.medium(
+                                size: 35,
+                                textColor: AppStyle.homeYoutubeRed,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                }
+
+                return Skeletonizer(
+                  enabled: isLoading,
+                  child: Column(
+                    children: [
+                      _searchBar(),
+                      const SizedBox(height: 20),
+                      Expanded(
+                        child: AlignedGridView.count(
+                            // shrinkWrap: true,
+                            // physics: const NeverScrollableScrollPhysics(),
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 22,
+                            crossAxisSpacing: 25,
+                            addRepaintBoundaries: false,
+                            itemCount:
+                                isLoading == true ? 10 : productsList.length,
+                            itemBuilder: (ctx, index) {
+                              return PopupButton(
+                                  size: 250,
+                                  color: ctrl.getCategories(isLoading == true
+                                      ? 'jewelery'
+                                      : productsList[index].category ??
+                                          '')['color'],
+                                  shadowColor: ctrl.getCategories(
+                                      isLoading == true
+                                          ? 'jewelery'
+                                          : productsList[index].category ??
+                                              '')['shadowColor'],
+                                  radius: 10,
+                                  width: 250,
+                                  border: Border.all(
+                                      color: AppStyle.whiteColor, width: 1.0),
+                                  onPressed: isLoading == true
+                                      ? null
+                                      : () {
+                                          Get.toNamed(AppRoute.detailProduct,
+                                              arguments: productsList[index]);
+                                        },
+                                  child: _HomeButtonChild(
+                                    backgroundColor: ctrl.getCategories(
+                                        isLoading == true
+                                            ? 'jewelery'
+                                            : productsList[index].category ??
+                                                '')['backgroundImage'],
+                                    icon: isLoading == true
+                                        ? ""
+                                        : productsList[index].image ?? '',
+                                    title: isLoading == true
+                                        ? '---'
+                                        : productsList[index].title ?? '---',
+                                    price: isLoading == true
+                                        ? '---'
+                                        : (productsList[index].price != null
+                                            ? productsList[index]
+                                                .price
+                                                .toString()
+                                            : '---'),
+                                    // category: isLoading == true
+                                    //     ? '---'
+                                    //     : productsList[index].category ?? '---',
+                                    // count: isLoading == true
+                                    //     ? '---'
+                                    //     : (productsList[index].rating!.count != null
+                                    //         ? "(${productsList[index].rating!.count.toString()} views)"
+                                    //         : '---'),
+                                    // rate: isLoading == true
+                                    //     ? 5.0
+                                    //     : (productsList[index].rating!.rate != null
+                                    //         ? productsList[index]
+                                    //             .rating!
+                                    //             .rate!
+                                    //             .toDouble()
+                                    //         : 0.0),
+                                  ));
+                            }),
+                      ),
+                    ],
+                  ),
+                );
+              }),
             ))
       ];
     }
@@ -295,8 +403,10 @@ class _HomeButtonChild extends StatelessWidget {
         Align(
           alignment: Alignment.center,
           child: Container(
-            width: 90,
-            height: 90,
+            width:
+                sizer.Device.screenType == sizer.ScreenType.tablet ? 120 : 90,
+            height:
+                sizer.Device.screenType == sizer.ScreenType.tablet ? 120 : 90,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
               color: backgroundColor,
@@ -332,7 +442,7 @@ class _HomeButtonChild extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: AppStyle.medium(
-            size: 14,
+            size: sizer.Device.screenType == sizer.ScreenType.tablet ? 20 : 14,
             textColor: AppStyle.whiteColor,
           ),
         ),
@@ -340,7 +450,7 @@ class _HomeButtonChild extends StatelessWidget {
         Text(
           "\$ $price",
           style: AppStyle.bold(
-            size: 16,
+            size: sizer.Device.screenType == sizer.ScreenType.tablet ? 25 : 16,
             textColor: AppStyle.whiteColor,
           ),
         ),
