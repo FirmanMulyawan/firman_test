@@ -1,6 +1,6 @@
 # Money Expense App
 
-Aplikasi mobile untuk mencatat, mengelola, dan memantau pengeluaran harian dengan Flutter.
+Aplikasi mobile untuk menampilkan produk dari FakeStore API dengan Flutter, serta menyimpan profil pengguna secara lokal menggunakan SQLite.
 
 ## Teknologi
 - Flutter: 3.27.4
@@ -9,12 +9,19 @@ Aplikasi mobile untuk mencatat, mengelola, dan memantau pengeluaran harian denga
 - Database / Storage: sqflite
 
 ## Fitur Utama 
-1. Tambah pengeluaran.
-2. Tampilkan total pengeluaran harian dan bulanan.
-3. Tampilkan total pengeluaran berdasarkan kategori.
-4. Tampilkan daftar pengeluaran keseluruhan.
+### 1. Produk
+1. Menampilkan daftar produk dari API.
+2. Search produk berdasarkan nama atau kategori.
+3. Detail produk lengkap (gambar, harga, kategori, rating).
+5. Tampilan grid dengan skeleton loading.
+
+### 2. Profile Pengguna
+1. edit profil (nama, email, nomor telepon, foto).
+2. Data disimpan lokal dengan SQLite (sqflite).
+3. Profil otomatis dimuat ulang setelah diedit.
 
 ## Demo App
-- Link video: https://drive.google.com/file/d/15-oMGvZ2JIrRqBnvAONK6httv-RG6ZWn/view?usp=sharing 
-- Link Apk: https://drive.google.com/file/d/1_GpGo5JsfJ6qPYl_866kJBAhON_47jg6/view?usp=sharing
+- Link video: https://drive.google.com/file/d/11xssPAwSr38rE5jpddIUFwbiNAKkwARB/view?usp=sharing
+
+- Link Apk: https://drive.google.com/file/d/1kZ1SFwqrZxTX96kxu50ByrumsqIxg8Zr/view?usp=sharing
 
